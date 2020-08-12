@@ -16,6 +16,10 @@ train_dataloader = TrainDataLoader(
 	neg_ent = 25,
 	neg_rel = 0)
 
+
+print("train_dataloader model was set.")
+
+
 # dataloader for test
 #test_dataloader = TestDataLoader("./benchmarks/FB15K237/", "link")
 
@@ -28,6 +32,10 @@ transe = TransE(
 	norm_flag = True)
 
 
+print("transe model was set.")
+
+
+
 # define the loss function
 model = NegativeSampling(
 	model = transe, 
@@ -35,12 +43,18 @@ model = NegativeSampling(
 	batch_size = train_dataloader.get_batch_size()
 )
 
+
+print("negative sampling model was set.")
+
+
 # train the model
 trainer = Trainer(model = model, data_loader = train_dataloader, train_times = 1000, alpha = 1.0, use_gpu = True)
 trainer.run()
-transe.save_checkpoint('./checkpoint/transe.ckpt')
+transe.save_checkpoint('./checkpoint/transe_icd10.ckpt')
+
+print("checkpoint was saved.")
 
 # test the model
-transe.load_checkpoint('./checkpoint/transe.ckpt')
+transe.load_checkpoint('./checkpoint/transe_icd10.ckpt')
 #tester = Tester(model = transe, data_loader = test_dataloader, use_gpu = True)
 #tester.run_link_prediction(type_constrain = False)
