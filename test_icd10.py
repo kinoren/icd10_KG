@@ -21,7 +21,12 @@ print("train_dataloader model was set.")
 
 
 # dataloader for test
-#test_dataloader = TestDataLoader("./benchmarks/FB15K237/", "link")
+test_dataloader = TestDataLoader("./icd10_KG/", "link",False)
+
+
+print("test_dataloader model was set.")
+
+
 
 # define the model
 transe = TransE(
@@ -56,5 +61,5 @@ print("checkpoint was saved.")
 
 # test the model
 transe.load_checkpoint('./checkpoint/transe_icd10.ckpt')
-#tester = Tester(model = transe, data_loader = test_dataloader, use_gpu = True)
-#tester.run_link_prediction(type_constrain = False)
+tester = Tester(model = transe, data_loader = test_dataloader, use_gpu = True)
+tester.run_link_prediction(type_constrain = False)
